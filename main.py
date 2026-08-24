@@ -9,11 +9,9 @@ def welcome(message):
     welcome_text = f'user {message.from_user.first_name} Welcome to the Bot!'
     bot.send_message(message.chat.id, welcome_text)
 
+# When user types /stops, bot will return a list of nearby bus stops
 @bot.message_handler(commands=["stops"])
 def show_stops(message):
-    # nearest_stops = "Nearby Bus Stops:\n1. Biz2: 30m\n2. HSSML: 40m\n3. Opp. HSSML: 120m"
-    
-    # bot.send_message(message.chat.id, nearest_stops)
 
     # Create a set of buttons in the bot's reply message
     keyboard = types.InlineKeyboardMarkup()
@@ -35,5 +33,14 @@ def show_stops(message):
 
     bot.send_message(message.chat.id, "Nearby Bus Stops:", reply_markup=keyboard)
 
+@bot.callback_query_handler(func=lambda call: call.data.startswith("stop_"))
+def handle_stop_button_click(call):
+    if call.data == "stop_biz2":
+        reply="BIZ2 Bus Arrivals:\nA1: 3min, 5min, 10min\nD2:ARR, 6min, 12min"
+    elif call.data == "stop_hssml":
+        reply="HSSML Bus Arrivals:\nD1:2min, 7min, 9min\nR1:3min, 5min, 14min"
+    else:
+        reply="Error: No Button Clicked!"
+    bot.send_message(call.message.chat.id, reply)
 
 bot.polling() 
