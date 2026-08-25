@@ -16,29 +16,29 @@ def show_stops(message):
     # Create a set of buttons in the bot's reply message
     keyboard = types.InlineKeyboardMarkup()
 
-    # Add button option for BIZ2 bus stop
-    biz2_button = types.InlineKeyboardButton(
-        "BIZ2: 30M",
-        callback_data="stop_biz2"
+    # Add button option for HMK bus stop
+    heng_mui_keng_button = types.InlineKeyboardButton(
+        "Heng Mui Keng Terrace: 30M",
+        callback_data="stop_16069"
     )
 
-    # Add button option for HSSML bus stop
-    hssml_button = types.InlineKeyboardButton(
-        "HSSML: 45M",
-        callback_data="stop_hssml"
+    # Add button option for Opp. HMK bus stop
+    opposite_heng_mui_keng_button = types.InlineKeyboardButton(
+        "Opp Heng Mui Keng Terrace: 45M",
+        callback_data="stop_16061"
     )
 
-    keyboard.add(biz2_button)
-    keyboard.add(hssml_button)
+    keyboard.add(heng_mui_keng_button)
+    keyboard.add(opposite_heng_mui_keng_button)
 
     bot.send_message(message.chat.id, "Nearby Bus Stops:", reply_markup=keyboard)
 
 @bot.callback_query_handler(func=lambda call: call.data.startswith("stop_"))
 def handle_stop_button_click(call):
-    if call.data == "stop_biz2":
-        reply="BIZ2 Bus Arrivals:\nA1: 3min, 5min, 10min\nD2:ARR, 6min, 12min"
-    elif call.data == "stop_hssml":
-        reply="HSSML Bus Arrivals:\nD1:2min, 7min, 9min\nR1:3min, 5min, 14min"
+    if call.data == "stop_16069":
+        reply="Heng Mui Keng Terrace Bus Arrivals:\n3min, 5min, 10min"
+    elif call.data == "stop_16061":
+        reply="Opp Heng Mui Keng Terrace Bus Arrivals:\n2min, 7min, 9min"
     else:
         reply="Error: No Button Clicked!"
     bot.send_message(call.message.chat.id, reply)
