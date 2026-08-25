@@ -1,11 +1,11 @@
-# 🚌 NUS Shuttle Bot
+# 🚌 SG Bus Arrivals Bot
 
-A Telegram bot providing live shuttle bus arrival information and configurable bus arrival alerts.
+A Telegram bot for checking Singapore public bus stops and arrival information.
 
 ## Planned features
 
-- Live shuttle bus arrival timings
-- Bookmarked bus stops
+- Select nearby public bus stops
+- View bus-stop information
 - Arrival notifications
 - Route information
 
