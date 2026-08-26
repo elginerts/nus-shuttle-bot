@@ -1,6 +1,7 @@
-from config import TELEGRAM_TOKEN
+from config import TELEGRAM_TOKEN, LTA_API_KEY
 import telebot
 from telebot import types
+import requests
 
 bot = telebot.TeleBot(token=TELEGRAM_TOKEN)
 
@@ -42,5 +43,32 @@ def handle_stop_button_click(call):
     else:
         reply="Error: No Button Clicked!"
     bot.send_message(call.message.chat.id, reply)
+
+
+# API endpoint for LTA bus arrivals
+lta_url = "https://datamall2.mytransport.sg/ltaodataservice/v3/BusArrival"
+
+# Create header for LTA API authentication 
+lta_header = {
+    "AccountKey": LTA_API_KEY
+}
+
+# Create query parameter for LTA API endpoint
+lta_params = {
+    "BusStopCode": "16069"
+}
+
+# Get bus arrival timings for Heng Mui Keng Terrace bus stop
+stop_16069_response = requests.get(lta_url, headers=lta_header, params=lta_params)
+arrival_data = stop_16069_response.json()
+print(arrival_data)
+
+services_16069 = arrival_data["Services"]
+# If no arrival data, display no buses in telegram
+if len(services_16069) == 0:
+    print("No bus arrival information is currently available.")
+else:
+    print(services)
+
 
 bot.polling() 

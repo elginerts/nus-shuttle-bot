@@ -10,3 +10,4 @@ load_dotenv()
 
 # Retrieve telegram bot API token from .env file
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+LTA_API_KEY = os.getenv("LTA_API_KEY")
